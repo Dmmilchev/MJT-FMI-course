@@ -1,6 +1,7 @@
 package bg.sofia.uni.fmi.mjt.gym;
 
 import bg.sofia.uni.fmi.mjt.gym.member.GymMember;
+import bg.sofia.uni.fmi.mjt.gym.member.Member;
 
 import java.util.Collection;
 import java.time.DayOfWeek;
@@ -14,7 +15,7 @@ public interface GymAPI {
      * Returns an unmodifiable copy of all members of the gym.
      * If there are no members, return an empty collection.
      */
-    SortedSet<GymMember> getMembers();
+    SortedSet<Member> getMembers();
 
     /**
      * Returns an unmodifiable copy of all members of the gym sorted by their name in lexicographic order.

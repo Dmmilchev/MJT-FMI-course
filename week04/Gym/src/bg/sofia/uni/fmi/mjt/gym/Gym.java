@@ -30,8 +30,8 @@ public class Gym implements GymAPI{
      * If there are no members, return an empty collection.
      */
     @Override
-    public SortedSet<GymMember> getMembers() {
-        return Collections.unmodifiableSortedSet(members);0
+    public SortedSet<Member> getMembers() {
+        return Collections.unmodifiableSortedSet(members);
     }
 
     /**
