@@ -6,6 +6,7 @@ import bg.sofia.uni.fmi.mjt.intelligenthome.device.IoTDevice;
 import bg.sofia.uni.fmi.mjt.intelligenthome.center.comparator.KWhComparator;
 import bg.sofia.uni.fmi.mjt.intelligenthome.center.comparator.RegistrationComparator;
 import bg.sofia.uni.fmi.mjt.intelligenthome.center.exceptions.DeviceAlreadyRegisteredException;
+import bg.sofia.uni.fmi.mjt.intelligenthome.center.exceptions.DeviceNotFoundException;
 import bg.sofia.uni.fmi.mjt.intelligenthome.storage.DeviceStorage;
 
 import java.time.LocalDateTime;
@@ -25,13 +26,16 @@ public class IntelligentHomeCenter {
      * @throws DeviceAlreadyRegisteredException in case the @device is already
      *                                          registered.
      */
-    public void register(IoTDevice device) throws DeviceAlreadyRegisteredException {
+    public void register(IoTDevice device) throws IllegalArgumentException, DeviceAlreadyRegisteredException {
         if (device == null) {
             throw new IllegalArgumentException("device cannot be null");
         }
+        if (storage.exists(device.getId())) {
+            throw new DeviceAlreadyRegisteredException("Device with the same ID has been already registered");
+        }
 
-        storage.store(device.getId(), device);
         device.setRegistration(LocalDateTime.now());
+        storage.store(device.getId(), device);
     }
 
     /**
@@ -40,9 +44,12 @@ public class IntelligentHomeCenter {
      * @throws IllegalArgumentException in case null is passed.
      * @throws DeviceNotFoundException  in case the @device is not found.
      */
-    public void unregister(IoTDevice device) throws DeviceNotFoundException {
+    public void unregister(IoTDevice device) throws IllegalArgumentException, DeviceNotFoundException {
         if (device == null) {
             throw new IllegalArgumentException("device cannot be null");
+        }
+        if (!storage.exists(device.getId())) {
+            throw new DeviceNotFoundException("Device isn't in storage");
         }
 
         storage.delete(device.getId());
@@ -74,6 +81,9 @@ public class IntelligentHomeCenter {
      * @throws IllegalArgumentException in case @type is null.
      */
     public int getDeviceQuantityPerType(DeviceType type) {
+        if (type == null) {
+            throw new IllegalArgumentException("Type can't be null");
+        }
         int quantity = 0;
 
         for (IoTDevice value:storage.listAll()) {
@@ -89,19 +99,23 @@ public class IntelligentHomeCenter {
         if (n < 0) {
             throw new IllegalArgumentException();
         }
-        List<IoTDevice> list = new LinkedList<>();
+
+        List<IoTDevice> list = new ArrayList<>();
         for (IoTDevice value : storage.listAll()) {
             list.add(value);
         }
+
         KWhComparator compareKWh = new KWhComparator();
-        Collections.sort(list, compareKWh);
+        list.sort(compareKWh);
         if (n >= list.size()) {
             n = list.size();
         }
+
         List<String> arrList = new ArrayList<String>();
         for (int i=0; i<n; i++) {
             arrList.add(list.get(i).getId());
         }
+
         return arrList;
     }
 
@@ -126,35 +140,10 @@ public class IntelligentHomeCenter {
             n = list.size();
         }
 
-        for (int i = 0; i <= n; i++) {
+        for (int i = n; i >= 0; i--) {
             arrList.add(list.get(i));
         }
 
         return arrList;
     }
-
-//  Comparator<IoTDevice> comparatorKWh = new Comparator<IoTDevice>()
-//	{
-//		public int compare(IoTDevice firstDevice, IoTDevice secondDevice)
-//		{
-//			long hoursFirstDevice = Duration.between(firstDevice.getInstallationDateTime(), LocalDateTime.now()).toHours();
-//			long hoursSecondDevice = Duration.between(secondDevice.getInstallationDateTime(), LocalDateTime.now()).toHours();
-//			double firstDeviceConsumption = firstDevice.getPowerConsumption();
-//			double secondDeviceConsumption = secondDevice.getPowerConsumption();
-//
-//			if (firstDeviceConsumption * hoursFirstDevice > secondDeviceConsumption*hoursSecondDevice)
-//			{
-//				return 1;
-//			}
-//			else if (firstDeviceConsumption * hoursFirstDevice < secondDeviceConsumption*hoursSecondDevice)
-//			{
-//				return -1;
-//			}
-//			else
-//			{
-//				return 0;
-//			}
-//
-//		}
-//	};
 }

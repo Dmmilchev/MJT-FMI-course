@@ -3,6 +3,7 @@ package bg.sofia.uni.fmi.mjt.intelligenthome.device;
 import java.time.LocalDateTime;
 
 public class RgbBulb extends IoTDeviceBase {
+    static int uniqueNumberDevice = -1;
     private String bulbID;
     DeviceType type;
 
@@ -10,8 +11,8 @@ public class RgbBulb extends IoTDeviceBase {
         super(name, powerConsumption, installationDateTime);
 
         type = DeviceType.BULB;
-        bulbID = type.getShortName() + '-' + name + '-' + uniqueNumberDevice;
         uniqueNumberDevice++;
+        bulbID = type.getShortName() + '-' + name + '-' + uniqueNumberDevice;
     }
 
     @Override
