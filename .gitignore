@@ -31,6 +31,12 @@ week04/Gym/out
 week04/Gym/.gitignore
 week04/Gym/Gym.iml
 
+
+week04/FlightScanner/.idea
+week04/FlightScanner/out
+week04/FlightScanner/.gitignore
+week04/FlightScanner/FlightScanner.iml
+
 week05/SImCity/.idea
 week05/SImCity/out
 week05/SImCity/.gitignore
