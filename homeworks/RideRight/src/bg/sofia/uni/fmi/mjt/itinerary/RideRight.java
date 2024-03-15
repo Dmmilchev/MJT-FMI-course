@@ -35,20 +35,6 @@ public class RideRight implements ItineraryPlanner{
         return roadNetwork;
     }
 
-    private Journey getCheapestPathWithoutTransfer(City start, City destination) throws NoPathToDestinationException {
-        ArrayList<Journey> journeysFromStart = new ArrayList<>(roadNetwork.get(start));
-        for (Journey journey : journeysFromStart) {
-            if (journey.to().equals(destination)) {
-                return journey;
-            }
-        }
-
-        throw new NoPathToDestinationException("Could not find paths without transfer from start to destination");
-    }
-//
-//    private SequencedCollection<Journey> getCheapestPathWithTransfer(City start, City destination) {
-//
-//    }
     /**
      * Returns a sequenced collection of Journeys representing the cheapest path from the start to the destination City.
      *
@@ -62,12 +48,6 @@ public class RideRight implements ItineraryPlanner{
      */
     @Override
     public SequencedCollection<Journey> findCheapestPath(City start, City destination, boolean allowTransfer) throws CityNotKnownException, NoPathToDestinationException {
-        ArrayList<Journey> result = new ArrayList<>();
-        if(!allowTransfer) {
-            result.add(getCheapestPathWithoutTransfer(start, destination));
-            return result;
-        }
-
-        return result;
+        return new ArrayList<Journey>();
     }
 }
