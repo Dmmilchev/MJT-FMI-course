@@ -49,3 +49,10 @@ week06/IntelligentHome/out
 week06/IntelligentHome/.gitignore
 week06/IntelligentHome/IntelligentHome.iml
 week06/IntelligentHome/lib
+
+homeworks/.idea
+homeworks/RideRight/.idea
+homeworks/RideRight/out
+homeworks/RideRight/.gitignore
+homeworks/RideRight/RideRight.iml
+homeworks/RideRight/lib
