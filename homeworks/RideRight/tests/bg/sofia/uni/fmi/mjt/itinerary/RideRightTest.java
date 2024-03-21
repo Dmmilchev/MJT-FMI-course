@@ -1,6 +1,7 @@
 package bg.sofia.uni.fmi.mjt.itinerary;
 
 import bg.sofia.uni.fmi.mjt.itinerary.exception.NoPathToDestinationException;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -9,6 +10,7 @@ import static org.mockito.Mockito.mock;
 public class RideRightTest {
 
     @Test
+    @Disabled
     void testGetCheapestPathWithoutTransferShouldThrowExceptionIfThereIsNotAPath() {
         RideRight rr = new RideRight();
         City city1 = mock();

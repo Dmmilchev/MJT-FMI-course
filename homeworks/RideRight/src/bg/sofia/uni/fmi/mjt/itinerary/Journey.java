@@ -16,4 +16,14 @@ public record Journey(VehicleType vehicleType, City from, City to, BigDecimal pr
     public int compareTo(Journey o) {
         return this.getTotalPrice().compareTo(o.getTotalPrice());
     }
+
+    public String toString() {
+
+        String type = switch (this.vehicleType()) {
+            case vehicleType.PLANE -> "plane";
+            case VehicleType.BUS -> "bus";
+            case vehicleType.TRAIN -> "traing";
+        };
+        return "From " + from.name() + " to " + to.name() + " by " + type + " that costs " + getTotalPrice() + " ";
+    }
 }
